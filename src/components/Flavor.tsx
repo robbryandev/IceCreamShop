@@ -72,18 +72,16 @@ export default function Flavor({...props}: FlavorProps) {
   
   return (
     <div className={`w-56 h-44 ${editing ? " bg-teal-300" :"bg-gray-200"} rounded-md p-4 shadow-md text-center m-2`} id={props.flavor.id} key={props.flavor.id}>
-      <p className="text-3xl pb-4">{props.flavor.name} ({props.flavor.pints})</p>
+      <p className="text-3xl pb-4">{props.flavor.name} ({props.flavor.pints})
+        {!props.globalEdit.edit && props.flavor.pints > 0 ? (
+        <span className="ml-6 bg-red-500 py-2 px-4 rounded-full text-xl text-white">
+          <button onClick={handleDecrement}>-1</button>
+        </span>
+        ) : null}
+      </p>
       {
         !props.disableEdit && !props.globalEdit.edit ? (
         <button onClick={handleEdit}>Edit</button>
-        ) : (
-          null
-        )
-      }
-      <br/>
-      {
-        !props.globalEdit.edit && props.flavor.pints > 0 ? (
-          <button onClick={handleDecrement}>-1</button>
         ) : (
           null
         )
