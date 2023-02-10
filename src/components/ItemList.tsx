@@ -9,7 +9,7 @@ export default class ItemList extends Component<{items: ItemType[], globalEdit: 
         {
           this.props.items.map((it) => {
             const item = {
-              id: `item-${it.id}`,
+              id: it.id,
               name: it.name,
               flavor: it.flavor,
               price: it.price,

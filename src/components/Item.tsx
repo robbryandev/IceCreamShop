@@ -19,6 +19,7 @@ export default function Item({...props}: ItemProps) {
   const [editing, setEditing] = useState(false)
   function handleEdit(event: any) {
     if (!props.globalEdit.edit) {
+      console.log(props.item.id)
       props.setGlobal({
         edit: true, 
         item: {
