@@ -1,9 +1,17 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import { Inter } from '@next/font/google'
+
+import ItemForm from '@/components/ItemForm'
+import Item, { ItemType } from "@/components/Item"
+import { useState } from 'react'
+import ItemList from '@/components/ItemList'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const baseItems: ItemType[] = []
+  const [items, setItems] = useState(baseItems)
   return (
     <>
       <Head>
@@ -12,7 +20,12 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main></main>
+      <main>
+        <div className='flex'>
+          <ItemForm items={items} addItem={setItems}/>
+          <ItemList items={items}/>
+        </div>
+      </main>
     </>
   )
 }
