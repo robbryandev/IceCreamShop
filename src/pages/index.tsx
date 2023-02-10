@@ -2,21 +2,23 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { Inter } from '@next/font/google'
 
-import ItemForm from '@/components/ItemForm'
-import Item, { ItemType } from "@/components/Item"
-import { useState } from 'react'
-import ItemList from '@/components/ItemList'
+import FlavorForm from '@/components/FlavorForm'
+import Flavor, { FlavorType } from "@/components/Flavor"
+import { useState, Fragment } from 'react'
+import FlavorList from '@/components/FlavorList'
+import FlavorDetails from '@/components/FlavorDetails'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export type editProps = {
   edit: boolean,
-  item?: ItemType
+  flavor?: FlavorType
 }
 
 export default function Home() {
-  const baseItems: ItemType[] = []
-  const [items, setItems] = useState(baseItems)
+  const baseFlavors: FlavorType[] = []
+  const [flavors, setFlavors] = useState(baseFlavors)
+  const [details, setDetails] = useState(false)
   const baseEdit: editProps = {
     edit: false
   }
@@ -30,11 +32,20 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <p className='text-4xl text-center my-8 font-bold'>Flavors</p>
-        <div className='flex'>
-          <ItemForm globalEdit={edit} setGlobal={setEdit} initial={{name: "", flavor: "", price: "0.00", pints: "0"}} items={items} addItem={setItems}/>
-          <ItemList globalEdit={edit} setGlobal={setEdit} items={items}/>
-        </div>
+
+          {
+            details ? (
+              <FlavorDetails globalEdit={edit} setGlobal={setEdit} flavor={edit.flavor!} setDetails={setDetails}/>
+            ) : (
+              <>              
+                <p className='text-4xl text-center my-8 font-bold'>Flavors</p>
+                <div className='flex'>
+                  <FlavorForm globalEdit={edit} setGlobal={setEdit} initial={{name: "", flavor: "", price: "0.00", pints: "0"}} flavors={flavors} addFlavor={setFlavors}/>
+                  <FlavorList globalEdit={edit} setGlobal={setEdit} flavors={flavors} setDetails={setDetails}/>
+                </div>
+              </>
+            )
+          }
       </main>
     </>
   )

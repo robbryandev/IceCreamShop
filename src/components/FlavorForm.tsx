@@ -1,10 +1,10 @@
 import { FormEvent, useState, useEffect, ChangeEvent } from "react"
 import {v4} from "uuid"
-import styles from "@/styles/ItemForm.module.css"
-import { ItemType } from "./Item"
+import styles from "@/styles/FlavorForm.module.css"
+import { FlavorType } from "./Flavor"
 import { editProps } from "@/pages";
 
-type ItemInputProps = {
+type FlavorInputProps = {
   placeholder: string,
   inputType: string,
   numStep?: string,
@@ -19,15 +19,15 @@ type InitialForm = {
   pints: string
 }
 
-type ItemFormProps = {
-  items: ItemType[],
+type FlavorFormProps = {
+  flavors: FlavorType[],
   initial: InitialForm
-  addItem: Function,
+  addFlavor: Function,
   globalEdit: editProps,
   setGlobal: any
 }
 
-export function ItemFormInput({...props}: ItemInputProps) {
+export function FlavorFormInput({...props}: FlavorInputProps) {
   if (props.numStep != null) {
     return (
       <>
@@ -56,7 +56,7 @@ export function ItemFormInput({...props}: ItemInputProps) {
   }
 }
 
-export default function ItemForm({...props}: ItemFormProps) {
+export default function FlavorForm({...props}: FlavorFormProps) {
   const [formData, setFormData] = useState(props.initial)
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -65,41 +65,41 @@ export default function ItemForm({...props}: ItemFormProps) {
   
   function handleAdd(event: FormEvent) {
     event.preventDefault()
-    let newItem: ItemType
+    let newFlavor: FlavorType
     if (props.globalEdit.edit) {      
-      newItem = {
-        id: props.globalEdit.item!.id,
+      newFlavor = {
+        id: props.globalEdit.flavor!.id,
         name: formData.name,
         flavor: formData.flavor,
-        price: parseFloat(formData.price != null ? formData.price : props.globalEdit.item!.price.toString()),
-        pints: parseInt(formData.pints != null ? formData.pints : props.globalEdit.item!.pints.toString())
+        price: parseFloat(formData.price != null ? formData.price : props.globalEdit.flavor!.price.toString()),
+        pints: parseInt(formData.pints != null ? formData.pints : props.globalEdit.flavor!.pints.toString())
       }
-      const itemIndex = props.items.findIndex(it => it.id === props.globalEdit.item!.id)
-      console.log(itemIndex)
-      let newItems = structuredClone(props.items)
-      newItems[itemIndex] = newItem
-      console.log(JSON.stringify(newItems))
-      props.addItem(newItems)
-      props.setGlobal({edit: false, item: null})
+      const flavorIndex = props.flavors.findIndex(it => it.id === props.globalEdit.flavor!.id)
+      console.log(flavorIndex)
+      let newFlavors = structuredClone(props.flavors)
+      newFlavors[flavorIndex] = newFlavor
+      console.log(JSON.stringify(newFlavors))
+      props.addFlavor(newFlavors)
+      props.setGlobal({edit: false, flavor: null})
       return
     }
-    newItem = {
+    newFlavor = {
       id: v4(),
       name: formData.name,
       flavor: formData.flavor,
       price: parseFloat(formData.price != null ? formData.price : props.initial.price),
       pints: parseInt(formData.pints != null ? formData.pints : props.initial.pints)
     }
-    props.addItem([...props.items, newItem])
+    props.addFlavor([...props.flavors, newFlavor])
   }
 
   useEffect(() => {
     if (props.globalEdit.edit) {
       const newFormData = {
-        name: props.globalEdit.item!.name,
-        flavor: props.globalEdit.item!.flavor,
-        price: props.globalEdit.item!.price.toString(),
-        pints: props.globalEdit.item!.pints.toString(),
+        name: props.globalEdit.flavor!.name,
+        flavor: props.globalEdit.flavor!.flavor,
+        price: props.globalEdit.flavor!.price.toString(),
+        pints: props.globalEdit.flavor!.pints.toString(),
       }
       
       setFormData(newFormData)
@@ -110,10 +110,10 @@ export default function ItemForm({...props}: ItemFormProps) {
     <form onSubmit={handleAdd} className={`w-56 h-full p-4 mt-2 ml-12 mr-20 ${props.globalEdit.edit ? "bg-teal-300 text-black" :"bg-gray-100 text-slate-400"} rounded-md shadow-md`}>
       <center>
         <p className=" font-bold text-2xl py-2">{props.globalEdit.edit ? "Edit" : "New"} Ice Cream Flavor</p>
-        <ItemFormInput inputType="text" placeholder="name" onChange={handleChange} value={formData.name}/>
-        <ItemFormInput inputType="text" placeholder="flavor" onChange={handleChange} value={formData.flavor}/>
-        <ItemFormInput inputType="number" placeholder="price" numStep="0.01" onChange={handleChange} value={formData.price}/>
-        <ItemFormInput inputType="number" placeholder="pints" numStep="1" onChange={handleChange} value={formData.pints}/>
+        <FlavorFormInput inputType="text" placeholder="name" onChange={handleChange} value={formData.name}/>
+        <FlavorFormInput inputType="text" placeholder="flavor" onChange={handleChange} value={formData.flavor}/>
+        <FlavorFormInput inputType="number" placeholder="price" numStep="0.01" onChange={handleChange} value={formData.price}/>
+        <FlavorFormInput inputType="number" placeholder="pints" numStep="1" onChange={handleChange} value={formData.pints}/>
         <button type="submit" className="p-1.5 mt-3 bg-stone-200 hover:bg-stone-400 bg-opacity-80 border-2 border-gray-400 text-black rounded-lg">{props.globalEdit.edit ? "Edit" : "Add"} Flavor</button>
       </center>
     </form>
