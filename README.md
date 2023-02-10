@@ -17,6 +17,12 @@ Manage a mock ice cream shops inventory
 
 ## Getting Started
 
+### Install the packages
+
+```bash
+npm i
+```
+
 ### Development
 
 ```bash
