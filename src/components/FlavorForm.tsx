@@ -75,10 +75,8 @@ export default function FlavorForm({...props}: FlavorFormProps) {
         pints: parseInt(formData.pints != null ? formData.pints : props.globalEdit.flavor!.pints.toString())
       }
       const flavorIndex = props.flavors.findIndex(it => it.id === props.globalEdit.flavor!.id)
-      console.log(flavorIndex)
       let newFlavors = structuredClone(props.flavors)
       newFlavors[flavorIndex] = newFlavor
-      console.log(JSON.stringify(newFlavors))
       props.addFlavor(newFlavors)
       props.setGlobal({edit: false, flavor: null})
       return

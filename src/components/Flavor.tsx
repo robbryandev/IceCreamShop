@@ -6,7 +6,8 @@ export type FlavorProps = {
   globalEdit: editProps,
   setGlobal: Function,
   disableEdit: boolean,
-  setDetails?: Function
+  setDetails?: Function,
+  decrement: any
 }
 
 export type FlavorType = {
@@ -21,7 +22,6 @@ export default function Flavor({...props}: FlavorProps) {
   const [editing, setEditing] = useState(false)
   function handleEdit(event: any) {
     if (!props.globalEdit.edit && !props.disableEdit) {
-      console.log(props.flavor.id)
       props.setGlobal({
         edit: true, 
         flavor: {
@@ -52,6 +52,18 @@ export default function Flavor({...props}: FlavorProps) {
     }
   }
 
+  function handleDecrement() {
+    props.decrement(
+      {
+        id: props.flavor.id,
+        name: props.flavor.name,
+        flavor: props.flavor.flavor,
+        price: props.flavor.price,
+        pints: props.flavor.pints
+      }
+    )
+  }
+
   useEffect(() => {
     if (!props.globalEdit.edit) {
       setEditing(false)
@@ -59,8 +71,8 @@ export default function Flavor({...props}: FlavorProps) {
   }, [props.globalEdit])
   
   return (
-    <div className={`w-56 h-32 ${editing ? " bg-teal-300" :"bg-gray-200"} rounded-md p-4 shadow-md text-center m-2`} id={props.flavor.id} key={props.flavor.id}>
-      <p className="text-3xl pb-4">{props.flavor.name}</p>
+    <div className={`w-56 h-44 ${editing ? " bg-teal-300" :"bg-gray-200"} rounded-md p-4 shadow-md text-center m-2`} id={props.flavor.id} key={props.flavor.id}>
+      <p className="text-3xl pb-4">{props.flavor.name} ({props.flavor.pints})</p>
       {
         !props.disableEdit && !props.globalEdit.edit ? (
         <button onClick={handleEdit}>Edit</button>
@@ -70,8 +82,18 @@ export default function Flavor({...props}: FlavorProps) {
       }
       <br/>
       {
+        !props.globalEdit.edit && props.flavor.pints > 0 ? (
+          <button onClick={handleDecrement}>-1</button>
+        ) : (
+          null
+        )
+      }
+      <br/>
+      {
         !props.globalEdit.edit ? (
-          <button onClick={handleDetails}>Details</button>
+          <>
+            <button onClick={handleDetails}>Details</button>
+          </>
         ) : (
           null
         )

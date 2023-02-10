@@ -23,6 +23,15 @@ export default function Home() {
     edit: false
   }
   const [edit, setEdit] = useState(baseEdit)
+
+  function handleDecrement(flavor: FlavorType) {
+    let newFlavor = flavor
+    newFlavor.pints--
+    const flavorIndex = flavors.findIndex(fl => fl.id === flavor.id)
+    const newFlavors = structuredClone(flavors)
+    newFlavors[flavorIndex] = newFlavor
+    setFlavors(newFlavors)
+  }
   return (
     <>
       <Head>
@@ -41,7 +50,7 @@ export default function Home() {
                 <p className='text-4xl text-center my-8 font-bold'>Flavors</p>
                 <div className='flex'>
                   <FlavorForm globalEdit={edit} setGlobal={setEdit} initial={{name: "", flavor: "", price: "0.00", pints: "0"}} flavors={flavors} addFlavor={setFlavors}/>
-                  <FlavorList globalEdit={edit} setGlobal={setEdit} flavors={flavors} setDetails={setDetails}/>
+                  <FlavorList globalEdit={edit} setGlobal={setEdit} flavors={flavors} setDetails={setDetails} decrement={handleDecrement}/>
                 </div>
               </>
             )
