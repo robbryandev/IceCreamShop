@@ -21,8 +21,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <p className='text-4xl text-center my-8 font-bold'>Flavors</p>
         <div className='flex'>
-          <ItemForm items={items} addItem={setItems}/>
+          <ItemForm initial={{name: "", flavor: "", price: "0.00", pints: "0"}} items={items} addItem={setItems}/>
           <ItemList items={items}/>
         </div>
       </main>

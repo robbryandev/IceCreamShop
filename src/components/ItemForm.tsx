@@ -11,8 +11,16 @@ type ItemInputProps = {
   onChange: any
 }
 
+type InitialForm = {
+  name: string,
+  flavor: string,
+  price: string,
+  pints: string
+}
+
 type ItemFormProps = {
   items: ItemType[],
+  initial: InitialForm
   addItem: Function
 }
 
@@ -45,7 +53,7 @@ export function ItemFormInput({...props}: ItemInputProps) {
 }
 
 export default function ItemForm({...props}: ItemFormProps) {
-  const [formData, setFormData] = useState({name: "", flavor: "", price: "0.00", pints: "0"})
+  const [formData, setFormData] = useState(props.initial!)
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
      setFormData({...formData, [e.target.name]: e.target.value})
@@ -57,14 +65,14 @@ export default function ItemForm({...props}: ItemFormProps) {
       id: v4(),
       name: formData.name,
       flavor: formData.flavor,
-      price: parseFloat(formData.price),
-      pints: parseInt(formData.pints)
+      price: parseFloat(formData.price != null ? formData.price : props.initial.price),
+      pints: parseInt(formData.pints != null ? formData.pints : props.initial.pints)
     }
     props.addItem([...props.items, newItem])
   }
 
   return(
-    <form onSubmit={handleAdd} className="w-56 p-4 m-6 mr-20 bg-gray-100 rounded-md shadow-md">
+    <form onSubmit={handleAdd} className="w-56 h-full p-4 mt-2 ml-12 mr-20 bg-gray-100 rounded-md shadow-md">
       <center>
         <p className=" font-bold text-2xl py-2">New Ice Cream Flavor</p>
         <ItemFormInput inputType="text" placeholder="name" onChange={handleChange}/>
