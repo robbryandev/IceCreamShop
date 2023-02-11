@@ -2,7 +2,9 @@ import { Component } from "react";
 import Flavor, { FlavorType } from "./Flavor";
 import { editProps } from "@/pages";
 
-export default class FlavorList extends Component<{flavors: FlavorType[], globalEdit: editProps, setGlobal: any, setDetails: any, decrement: any}> {
+export default class FlavorList extends Component<{flavors: FlavorType[],
+   globalEdit: editProps, setGlobal: any, setDetails: any,
+    decrement: any, delete: any}> {
   render() {
     return (
       <div className="flex flex-wrap m-0 p-0 w-10/12">
@@ -22,6 +24,7 @@ export default class FlavorList extends Component<{flavors: FlavorType[], global
               flavor={flavor} disableEdit={false} 
               setDetails={this.props.setDetails} 
               decrement={this.props.decrement}
+              delete={this.props.delete}
             />
           })
         }

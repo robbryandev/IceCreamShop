@@ -7,7 +7,8 @@ export type FlavorProps = {
   setGlobal: Function,
   disableEdit: boolean,
   setDetails?: Function,
-  decrement: any
+  decrement: any,
+  delete: any
 }
 
 export type FlavorType = {
@@ -64,6 +65,18 @@ export default function Flavor({...props}: FlavorProps) {
     )
   }
 
+  function handleDelete() {
+    props.delete(
+      {
+        id: props.flavor.id,
+        name: props.flavor.name,
+        flavor: props.flavor.flavor,
+        price: props.flavor.price,
+        pints: props.flavor.pints
+      }
+    )
+  }
+
   useEffect(() => {
     if (!props.globalEdit.edit) {
       setEditing(false)
@@ -71,7 +84,7 @@ export default function Flavor({...props}: FlavorProps) {
   }, [props.globalEdit])
   
   return (
-    <div className={`w-56 h-44 ${editing ? " bg-teal-300" :"bg-gray-200"} rounded-md p-4 shadow-md text-center m-2`} id={props.flavor.id} key={props.flavor.id}>
+    <div className={`w-56 h-48 ${editing ? " bg-teal-300" :"bg-gray-200"} rounded-md p-4 shadow-md text-center m-2`} id={props.flavor.id} key={props.flavor.id}>
       <p className="text-3xl pb-4">{props.flavor.name} ({props.flavor.pints})
         {!props.globalEdit.edit && props.flavor.pints > 0 ? (
         <span className="ml-6 bg-red-500 py-2 px-4 rounded-full text-xl text-white">
@@ -91,6 +104,8 @@ export default function Flavor({...props}: FlavorProps) {
         !props.globalEdit.edit ? (
           <>
             <button onClick={handleDetails}>Details</button>
+            <br />
+            <button onClick={handleDelete}>Delete</button>
           </>
         ) : (
           null

@@ -32,6 +32,12 @@ export default function Home() {
     newFlavors[flavorIndex] = newFlavor
     setFlavors(newFlavors)
   }
+
+  function handleDelete(flavor: FlavorType) {
+    const newFlavors = flavors.filter((fl) => fl.id !== flavor.id)
+    setFlavors(newFlavors)
+  }
+
   return (
     <>
       <Head>
@@ -50,7 +56,7 @@ export default function Home() {
                 <p className='text-4xl text-center my-8 font-bold'>Flavors</p>
                 <div className='flex'>
                   <FlavorForm globalEdit={edit} setGlobal={setEdit} initial={{name: "", flavor: "", price: "0.00", pints: "0"}} flavors={flavors} addFlavor={setFlavors}/>
-                  <FlavorList globalEdit={edit} setGlobal={setEdit} flavors={flavors} setDetails={setDetails} decrement={handleDecrement}/>
+                  <FlavorList globalEdit={edit} setGlobal={setEdit} flavors={flavors} setDetails={setDetails} decrement={handleDecrement} delete={handleDelete}/>
                 </div>
               </>
             )
