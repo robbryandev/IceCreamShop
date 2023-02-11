@@ -46,14 +46,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main className='bg-yellow-900 w-screen min-h-screen m-0 p-0 absolute left-0 top-0'>
 
           {
             details ? (
               <FlavorDetails globalEdit={edit} setGlobal={setEdit} flavor={edit.flavor!} setDetails={setDetails}/>
             ) : (
               <>              
-                <p className='text-4xl text-center my-8 font-bold'>Flavors</p>
+                <p className='text-4xl text-center text-teal-300 my-8 font-bold text-shadow'>
+                  <span>
+                    <img className='inline w-[3rem] h-auto' src="/favicon.ico" alt="ice cream icon" />
+                  </span> Flavors</p>
                 <div className='flex'>
                   <FlavorForm globalEdit={edit} setGlobal={setEdit} initial={{name: "", flavor: "", price: "0.00", pints: "0"}} flavors={flavors} addFlavor={setFlavors}/>
                   <FlavorList globalEdit={edit} setGlobal={setEdit} flavors={flavors} setDetails={setDetails} decrement={handleDecrement} delete={handleDelete}/>

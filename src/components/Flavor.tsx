@@ -84,7 +84,7 @@ export default function Flavor({...props}: FlavorProps) {
   }, [props.globalEdit])
   
   return (
-    <div className={`w-56 h-48 ${editing ? " bg-teal-300" :"bg-gray-200"} rounded-md p-4 shadow-md text-center m-2`} id={props.flavor.id} key={props.flavor.id}>
+    <div className={`w-56 h-48 ${editing ? " bg-green-300" :"bg-orange-200"} rounded-md p-4 shadow-md shadow-teal-200 text-center m-2`} id={props.flavor.id} key={props.flavor.id}>
       <p className="text-3xl pb-4">{props.flavor.name} ({props.flavor.pints})
         {!props.globalEdit.edit && props.flavor.pints > 0 ? (
         <span className="ml-6 bg-red-500 py-2 px-4 rounded-full text-xl text-white">
